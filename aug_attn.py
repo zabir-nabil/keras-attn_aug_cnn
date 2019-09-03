@@ -3,6 +3,9 @@ from keras.layers import Conv2D, Conv1D
 from keras.layers import Concatenate, concatenate, Reshape
 
 # https://github.com/titu1994/keras-attention-augmented-convs/blob/master/attn_augconv.py
+# most of the implementation is taken from this repo
+# I extended to add 1-D CNN implementation
+# Even though, it's (the extension) not tested properly yet.
 
 from keras import initializers
 from keras import backend as K

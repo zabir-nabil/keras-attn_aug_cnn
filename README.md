@@ -1,5 +1,5 @@
 # keras-attn_aug_cnn
-Extension of the `Attention Augmented Convolutional Networks` paper for 1-D convolution operation.
+Extension of the `Attention Augmented Convolutional Networks` paper for hacky 1-D convolution operation implementation.
 
 ## Properties
 
@@ -34,6 +34,9 @@ y = model(x)
 print(y.shape)
 
 ```
+
+
+
 
 ```
 __________________________________________________________________________________________________
@@ -72,7 +75,11 @@ ________________________________________________________________________________
 (1, 32, 20)
 ```
 
+
+
+
 ## 2-D CNN
+
 
 ```
 from aug_attn import *
@@ -96,6 +103,10 @@ print(x.shape)
 y = model(x)
 print(y.shape)
 ```
+
+
+
+
 
 ```
 __________________________________________________________________________________________________
@@ -123,3 +134,9 @@ ________________________________________________________________________________
 (1, 32, 32, 10)
 (1, 32, 32, 20)
 ```
+
+# Other Implementations
+
+* https://github.com/titu1994/keras-attention-augmented-convs
+* https://github.com/gan3sh500/attention-augmented-conv
+* https://github.com/leaderj1001/Attention-Augmented-Conv2d
