@@ -135,7 +135,7 @@ ________________________________________________________________________________
 (1, 32, 32, 20)
 ```
 
-# Other Implementations
+# Implementations
 
 * https://github.com/titu1994/keras-attention-augmented-convs
 * https://github.com/gan3sh500/attention-augmented-conv
