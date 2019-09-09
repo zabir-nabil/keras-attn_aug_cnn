@@ -1,5 +1,7 @@
 # keras-attn_aug_cnn
+
 Extension of the `Attention Augmented Convolutional Networks` paper for hacky 1-D convolution operation implementation.
+Can be used in tensorflow graph too.
 
 ## Properties
 
@@ -12,10 +14,10 @@ depth_k | filters, depth_v | filters,  Nh | depth_k, Nh | filters-depth_v
 ```
 
 from aug_attn import *
-from keras.layers import Input
-from keras.models import Model
+from tensorflow.keras.layers import Input
+from tensorflow.keras.models import Model
 
-ip = Input(shape=(32, 10))
+ip = Input(shape=(None, 10))
 cnn1 = Conv1D(filters = 10, kernel_size=3, strides=1,padding='same')(ip)
 x = augmented_conv1d(cnn1, shape = (32, 10), filters=20, kernel_size=5,
                      strides = 1,
@@ -39,33 +41,34 @@ print(y.shape)
 
 
 ```
+Model: "model_2"
 __________________________________________________________________________________________________
 Layer (type)                    Output Shape         Param #     Connected to                     
 ==================================================================================================
-input_15 (InputLayer)           (None, 32, 10)       0                                            
+input_3 (InputLayer)            [(None, None, 10)]   0                                            
 __________________________________________________________________________________________________
-conv1d_41 (Conv1D)              (None, 32, 10)       310         input_15[0][0]                   
+conv1d_8 (Conv1D)               (None, None, 10)     310         input_3[0][0]                    
 __________________________________________________________________________________________________
-conv1d_43 (Conv1D)              (None, 32, 12)       132         conv1d_41[0][0]                  
+conv1d_10 (Conv1D)              (None, None, 12)     132         conv1d_8[0][0]                   
 __________________________________________________________________________________________________
-reshape_52 (Reshape)            (None, 32, 1, 12)    0           conv1d_43[0][0]                  
+reshape_11 (Reshape)            (None, 32, 1, 12)    0           conv1d_10[0][0]                  
 __________________________________________________________________________________________________
-attention_augmentation2d_13 (At (None, 32, 1, 4)     64          reshape_52[0][0]                 
+attention_augmentation2d_2 (Att (None, None, None, N 64          reshape_11[0][0]                 
 __________________________________________________________________________________________________
-reshape_53 (Reshape)            (None, 32, 4)        0           attention_augmentation2d_13[0][0]
+reshape_12 (Reshape)            (None, 32, 4)        0           attention_augmentation2d_2[0][0] 
 __________________________________________________________________________________________________
-conv1d_42 (Conv1D)              (None, 32, 16)       816         conv1d_41[0][0]                  
+conv1d_9 (Conv1D)               (None, None, 16)     816         conv1d_8[0][0]                   
 __________________________________________________________________________________________________
-conv1d_44 (Conv1D)              (None, 32, 4)        20          reshape_53[0][0]                 
+conv1d_11 (Conv1D)              (None, 32, 4)        20          reshape_12[0][0]                 
 __________________________________________________________________________________________________
-reshape_51 (Reshape)            (None, 32, 1, 16)    0           conv1d_42[0][0]                  
+reshape_10 (Reshape)            (None, 32, 1, 16)    0           conv1d_9[0][0]                   
 __________________________________________________________________________________________________
-reshape_54 (Reshape)            (None, 32, 1, 4)     0           conv1d_44[0][0]                  
+reshape_13 (Reshape)            (None, 32, 1, 4)     0           conv1d_11[0][0]                  
 __________________________________________________________________________________________________
-concatenate_13 (Concatenate)    (None, 32, 1, 20)    0           reshape_51[0][0]                 
-                                                                 reshape_54[0][0]                 
+concatenate_2 (Concatenate)     (None, 32, 1, 20)    0           reshape_10[0][0]                 
+                                                                 reshape_13[0][0]                 
 __________________________________________________________________________________________________
-reshape_55 (Reshape)            (None, 32, 20)       0           concatenate_13[0][0]             
+reshape_14 (Reshape)            (None, 32, 20)       0           concatenate_2[0][0]              
 ==================================================================================================
 Total params: 1,342
 Trainable params: 1,342
@@ -83,8 +86,8 @@ ________________________________________________________________________________
 
 ```
 from aug_attn import *
-from keras.layers import Input
-from keras.models import Model
+from tensorflow.keras.layers import Input
+from tensorflow.keras.models import Model
 
 ip = Input(shape=(32, 32, 10))
 cnn1 = Conv2D(filters = 10, kernel_size=3, strides=1,padding='same')(ip)

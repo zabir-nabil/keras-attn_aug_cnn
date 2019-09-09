@@ -1,14 +1,14 @@
-from keras.layers import Layer
-from keras.layers import Conv2D, Conv1D
-from keras.layers import Concatenate, concatenate, Reshape
+from tensorflow.keras.layers import Layer
+from tensorflow.keras.layers import Conv2D, Conv1D
+from tensorflow.keras.layers import Concatenate, concatenate, Reshape
 
 # https://github.com/titu1994/keras-attention-augmented-convs/blob/master/attn_augconv.py
 # most of the implementation is taken from this repo
 # I extended to add 1-D CNN implementation
 # Even though, it's (the extension) not tested properly yet.
 
-from keras import initializers
-from keras import backend as K
+from tensorflow.keras import initializers
+from tensorflow.keras import backend as K
 
 import tensorflow as tf
 
@@ -135,19 +135,21 @@ class AttentionAugmentation2D(Layer):
 
         if self.relative:
             dk_per_head = self.depth_k // self.num_heads
+            
+            # print(dk_per_head)
 
             if dk_per_head == 0:
                 print('dk per head', dk_per_head)
 
             self.key_relative_w = self.add_weight('key_rel_w',
-                                                  shape=[2 * width - 1, dk_per_head],
-                                                  initializer=initializers.RandomNormal(
-                                                      stddev=dk_per_head ** -0.5))
+                                                  shape=tf.TensorShape([2 * width - 1, dk_per_head]),
+                                                  initializer=initializers.RandomNormal(stddev=dk_per_head ** -0.5))
+            # 2 * width - 1
 
             self.key_relative_h = self.add_weight('key_rel_h',
-                                                  shape=[2 * height - 1, dk_per_head],
-                                                  initializer=initializers.RandomNormal(
-                                                      stddev=dk_per_head ** -0.5))
+                                                  shape=tf.TensorShape([2 * height - 1, dk_per_head]),
+                                                  initializer=initializers.RandomNormal(stddev=dk_per_head ** -0.5))
+            # 2 * height - 1
 
         else:
             self.key_relative_w = None
